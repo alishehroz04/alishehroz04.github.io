@@ -288,3 +288,14 @@ em { font-style: normal; color: var(--accent); }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .ready .reveal { opacity: 1; transform: none; }
 }
+
+/* ===== Project title link ===== */
+.project {
+  display: flex; width: fit-content; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  margin-top: 18px; text-decoration: none;
+  font: 900 clamp(26px, 3.4vw, 40px)/1 var(--display); font-stretch: 120%; letter-spacing: -.02em;
+}
+.project span { display: inline-flex; align-items: center; gap: 6px; font: 600 15px/1 var(--body); color: var(--accent); }
+.project svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--ease); }
+.project:hover svg { transform: translate(2px, -2px); }
+.job p a { color: var(--accent); text-decoration: none; }
