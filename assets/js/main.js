@@ -133,6 +133,24 @@
     }, { passive: true });
   }
 
+  /* ---------- In-view gameplay loops (load only when visible) ---------- */
+  const saveData = navigator.connection && navigator.connection.saveData;
+  const loops = document.querySelectorAll('video[data-src]');
+  if (loops.length && 'IntersectionObserver' in window && !reduce && !saveData) {
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const v = e.target;
+        if (e.isIntersecting) {
+          if (!v.getAttribute('src')) v.src = v.dataset.src;
+          v.play().catch(() => {});
+        } else if (v.getAttribute('src')) {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+    loops.forEach((v) => vio.observe(v));
+  }
+
   /* ---------- Trailer modal (video loads only on tap) ---------- */
   const modal = document.getElementById('modal');
   const video = document.getElementById('modal-video');
