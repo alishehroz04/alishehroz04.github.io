@@ -353,3 +353,4 @@ em { font-style: normal; color: var(--accent); }
 .screens figure:hover img { transform: scale(1.04); }
 .modal__frame { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; background: #000; }
 .modal__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.studio-link { margin-top: 24px; }
