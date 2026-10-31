@@ -156,6 +156,7 @@
   const video = document.getElementById('modal-video');
   const box = modal && modal.querySelector('.modal__box');
   let lastFocus = null;
+  let ytFrame = null;
   const openVideo = (btn) => {
     lastFocus = btn;
     box.classList.toggle('is-vertical', btn.hasAttribute('data-vertical'));
@@ -167,6 +168,8 @@
     modal.querySelector('.modal__close').focus();
   };
   const closeVideo = () => {
+    if (ytFrame) { ytFrame.remove(); ytFrame = null; }
+    video.hidden = false;
     video.pause();
     video.removeAttribute('src');
     video.load();
@@ -175,6 +178,22 @@
     if (lastFocus) lastFocus.focus();
   };
   document.querySelectorAll('[data-video]').forEach((b) => b.addEventListener('click', () => openVideo(b)));
+
+  // YouTube trailers: iframe is created only when tapped
+  const openYouTube = (btn) => {
+    lastFocus = btn;
+    box.classList.remove('is-vertical');
+    video.hidden = true;
+    ytFrame = document.createElement('div');
+    ytFrame.className = 'modal__frame';
+    ytFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + btn.dataset.youtube +
+      '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="Game trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    box.appendChild(ytFrame);
+    modal.hidden = false;
+    if (lenis) lenis.stop();
+    modal.querySelector('.modal__close').focus();
+  };
+  document.querySelectorAll('[data-youtube]').forEach((b) => b.addEventListener('click', () => openYouTube(b)));
   if (modal) {
     modal.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeVideo));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeVideo(); });
